@@ -1959,7 +1959,7 @@ module.exports = {
     },
     searchStateQuery: async(searchData) => {
         try{
-            let query = `select * from MAESTADO where CPAIS = @cpais${ searchData.xestado ? " and XESTADO like '%" + searchData.xestado + "%'" : '' }`;
+            let query = `select * from MAPROVINCIAS where CPAIS = @cpais${ searchData.xestado ? " and XESTADO like '%" + searchData.xestado + "%'" : '' }`;
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('cpais', sql.Numeric(4, 0), searchData.cpais ? searchData.cpais : 1)
@@ -3310,8 +3310,8 @@ module.exports = {
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('cpais', sql.Numeric(4, 0), cityData.cpais)
-                .input('cciudad', sql.Int, cityData.cciudad)
-                .query('select * from MACIUDAD where CPAIS = @cpais and CCIUDAD = @cciudad');
+                .input('cprovincia', sql.Int, cityData.cciudad)
+                .query('select * from MADISTRITOS where CPAIS = @cpais and CPROVINCIA = @cprovincia');
             //sql.close();
             return { result: result };
         }catch(err){
